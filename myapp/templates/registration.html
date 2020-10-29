@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Demo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <br><br>
+    <form class="form-horizontal" id="registrationForm">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="name">Name:</label>
+            <div class="col-sm-3">
+            <input type="text" class="form-control" id="name" name="name">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="email">Email:</label>
+            <div class="col-sm-3">
+                <input type="email" class="form-control" id="email" name="email">
+            </div>
+        </div>
+
+        <div class="form-group">
+        <label class="control-label col-sm-2" for="gender">Gender:</label>
+        <div class="col-sm-3">
+                <label><input type="radio" id="gender" name="gender" value="male"> Male</label>
+                <label><input type="radio" id="gender" name="gender" value="female"> Female</label>
+        </div>
+        </div>
+    
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="hobbies">Hobbies:</label>
+            <div class="col-sm-3">
+                <label><input type="checkbox" name="hobby" class="hb_checkbox" id="reading" value="reading"> Reading</label>
+                <label><input type="checkbox" name="hobby" class="hb_checkbox" id="travelling" value="travelling"> Travelling</label>
+                <label><input type="checkbox" name="hobby" class="hb_checkbox" id="sports" value="sports"> Sports</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="hobbies">Password:</label>
+            <div class="col-sm-3">
+                <input type="password" class="form-control" id="password" name="password">        
+            </div>
+        </div>
+
+        <div class="form-group">        
+        <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-primary" type="button" id="submit">Submit</button>
+            <button class="btn btn-primary" type="button" id="update" onclick="updateFunction()" style="display:none;">Update</button>
+            <button class="btn btn-primary" type="button" id="cancel" style="display:none;">Cancel</button>
+        </div>
+        </div>
+    </form>
+</body>
+</html>
