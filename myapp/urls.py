@@ -18,5 +18,7 @@ from django.contrib import admin
 from . import views 
 
 urlpatterns = [
-    path('', views.RegistrationTemplate.as_view(), name="registration"),
+    path('index', views.home_page, name='index'),
+    path('', views.Register.as_view(), name='registration'),
+    path('login', views.Login.as_view(), name='login'),
 ]

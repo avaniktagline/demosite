@@ -22,7 +22,7 @@
         border: 1px solid #f1f1f1;  
         margin-bottom: 25px;  
     }  
-    .registerbtn {  
+    .loginbtn {  
         background-color: #4CAF50;  
         color: white;  
         padding: 16px 20px;  
@@ -32,7 +32,7 @@
         width: 25%;  
         opacity: 0.9;  
     }  
-    .registerbtn:hover {  
+    .loginbtn:hover {  
         opacity: 1;  
     }  
     </style>  
@@ -40,35 +40,16 @@
 <body>  
     <form method="post">{% csrf_token %}  
     <div class="container">  
-    <center><h1>User Registration Form</h1></center>  
+    <center><h1>User Login Form</h1></center>  
     <hr>  
-    <label><b>Name: </b></label><br>   
-    <input type="text" placeholder= "Enter Name" name="name" size="15" required ><br>
-
-    <label><b>Username: </b></label><br>   
-    <input type="text" placeholder= "Enter Name" name="username" size="15" required ><br>
 
     <label><b>Email: </b></label><br>  
-    <input type="text" placeholder="Enter Email" name="email" required>  
-    
-    <div>  
-        <label><b>Gender: </b></label><br>  
-        <input type="radio" value="male" name="gender"> Male   
-        <input type="radio" value="female" name="gender"> Female  
-        <input type="radio" value="Other" name="gender"> Other   
-    </div>
-
-    <div>
-        <label><b>Hobby: </b></label><br>
-        <input type="checkbox" value="reading" name="chk"> Reading
-        <input type="checkbox" value="travelling" name="chk"> Travelling
-        <input type="checkbox" value="sports" name="chk"> Sports
-    </div>
+    <input type="text" placeholder="Enter Email" name="email" required><br>
 
     <label><b>Password: </b></label><br> 
     <input type="password" placeholder="Enter Password" name="password" required><br>  
 
-    <button type="submit" class="registerbtn">Register</button>    
+    <button type="submit" class="loginbtn">Login</button>    
     </form>  
 </body>  
 </html>  
