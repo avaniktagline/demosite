@@ -41,7 +41,7 @@
     </style>  
 </head>  
 <body>
-    <form method="post">{% csrf_token %}  
+    <form id="userform" method="post">{% csrf_token %}  
     <div class="container">  
     <center><h1>User Registration Form</h1></center>  
     <hr>  
@@ -77,25 +77,8 @@
     <label><b>Password: </b></label><br> 
     <input type="password" placeholder="Enter Password" name="password" required><br>  
 
-    <button type="submit" class="registerbtn">Register</button>    
+    <button type="submit" id="submit" class="registerbtn">Register</button>    
     </form>  
 </body>  
 </html> 
 
-<script>
-    function validate(){
-        rules{
-        password: 
-        {
-            required: true,
-            minlength: 5,
-            maxlength:8
-        },
-        cpassword:{
-            required:true,
-            minlength:5,
-            equalTo:"#password"
-        },
-        },
-    }
-</script>

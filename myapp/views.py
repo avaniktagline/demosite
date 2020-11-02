@@ -5,7 +5,7 @@ from django.views import generic
 from django.contrib import messages
 from .models import *
 from django.contrib.auth import *
-from django.db import IntegrityError
+from django.contrib.auth.hashers import make_password
 
 # Create your views here.
 
@@ -25,9 +25,11 @@ class Register(generic.TemplateView):
         hobby = self.request.POST.getlist('chk')
         password = self.request.POST.get('password')
         try:
-            User.objects.create(name = name, username = username, email = email, gender = gender, hobby = hobby, password = password)
+            u = User.objects.create(name = name, username = username, email = email, gender = gender, hobby = hobby,)
+            u.password = make_password(password = password)
+            u.save()
             message = "Registration successfully"
-            return render(request, self.template_name, {'success': True, 'msg': message})
+            return render(request, 'login.html', {'success': True, 'msg': message})
         except Exception as e:
             return render(request, self.template_name, {'success': False, 'msg':e})           
 
@@ -40,8 +42,13 @@ class Login(generic.TemplateView):
         email = self.request.POST.get('email')
         password = self.request.POST.get('password')
         try:
-            user = User.objects.filter(email = email, password = password)
-            message = "Login successfully"
-            return render(request, 'index.html', {'success': True, 'msg': message})
-        except:
-            return render(request, self.template_name, {'success': False, 'msg':e})
+            u = User.objects.get(email=email)
+            message = "Invalid password"
+            if u.check_password(password) is True:
+                return render(request, 'index.html')
+            else:
+                return render(request, self.template_name, {'msg': message})
+        except Exception:
+            message = "Invalid email"
+            return render(request, self.template_name, {'msg': message})
+    
