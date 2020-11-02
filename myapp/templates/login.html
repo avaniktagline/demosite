@@ -37,12 +37,17 @@
     }  
     </style>  
 </head>  
-<body>  
+<body>
     <form method="post">{% csrf_token %}  
     <div class="container">  
     <center><h1>User Login Form</h1></center>  
     <hr>  
-
+    {% if msg %}
+    <div class="alert alert-info {% if success %} alert-success {% else %} alert-danger {% endif %}">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <p>{{msg}}</p>
+    </div>
+    {% endif %}
     <label><b>Email: </b></label><br>  
     <input type="text" placeholder="Enter Email" name="email" required><br>
 
