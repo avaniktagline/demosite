@@ -1,65 +1,26 @@
-<!DOCTYPE html>  
-<html>  
-<head>  
-    <meta name="viewport" content="width=device-width, initial-scale=1"> 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
-<style>  
-    .container {  
-        padding: 0px;  
-        /* background-color: lightblue;   */
-    }  
-    
-    input[type=text], input[type=password]{  
-        width: 25%;  
-        padding: 15px;  
-        margin: 5px 0 22px 0;  
-        border: none;  
-        background: #f1f1f1;  
-    }  
-    div {  
-        padding: 10px 0;  
-    }  
-    hr {  
-        border: 1px solid #f1f1f1;  
-        margin-bottom: 25px;  
-    }  
-    .registerbtn {  
-        background-color: #4CAF50;  
-        color: white;  
-        padding: 16px 20px;  
-        margin: 8px 0;  
-        border: none;  
-        cursor: pointer;  
-        width: 25%;  
-        opacity: 0.9;  
-    }  
-    .registerbtn:hover {  
-        opacity: 1;  
-    }  
-    </style>  
-</head>  
-<body>
+{% extends "base.html" %} 
+
+{% block content %}
     <form id="userform" method="post">{% csrf_token %}  
     <div class="container">  
     <center><h1>User Registration Form</h1></center>  
-    <hr>  
+
     {% if msg %}
-    <div class="alert alert-info {% if success %} alert-success {% else %} alert-danger {% endif %}">
+    <div class="alert alert-info alert-danger">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <p>{{msg}}</p>
     </div>
     {% endif %}
+
     <label><b>Name: </b></label><br>   
     <input type="text" placeholder= "Enter Name" name="name" size="15" required><br>
 
     <label><b>Username: </b></label><br>   
-    <input type="text" placeholder= "Enter Name" name="username" size="15" required><br>
+    <input type="text" placeholder= "Enter Username" name="username" size="15" required><br>
 
     <label><b>Email: </b></label><br>  
     <input type="text" placeholder="Enter Email" name="email" required>  
-    
+
     <div>  
         <label><b>Gender: </b></label><br>  
         <input type="radio" value="male" name="gender" required> Male   
@@ -77,8 +38,7 @@
     <label><b>Password: </b></label><br> 
     <input type="password" placeholder="Enter Password" name="password" required><br>  
 
-    <button type="submit" id="submit" class="registerbtn">Register</button>    
-    </form>  
-</body>  
-</html> 
+    <button type="submit" id="submit" class="registerbtn">Register</button> 
+    </form> 
+{% endblock %}  
 

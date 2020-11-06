@@ -1,0 +1,41 @@
+input[type=text], input[type=password]{  
+    width: 25%;  
+    padding: 10px;  
+    margin: 2px 0 10px 0;  
+    border: none;  
+    background: #f1f1f1;  
+}  
+
+div {  
+    padding: 5px 0;  
+}  
+
+.registerbtn {  
+    background-color: #4CAF50;  
+    color: white;  
+    padding: 16px 20px;  
+    margin: 8px 0;  
+    border: none;  
+    cursor: pointer;  
+    width: 25%;  
+    opacity: 0.9;  
+}  
+
+.registerbtn:hover {  
+    opacity: 1;  
+} 
+
+.loginbtn {  
+    background-color: #4CAF50;  
+    color: white;  
+    padding: 16px 20px;  
+    margin: 8px 0;  
+    border: none;  
+    cursor: pointer;  
+    width: 25%;  
+    opacity: 0.9;  
+}  
+
+.loginbtn:hover {  
+    opacity: 1;  
+}  
