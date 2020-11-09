@@ -2,26 +2,22 @@
 
 {% block content %}
     <form method="post">{% csrf_token %}  
-    <div class="container">  
-    <center><h1>User Login Form</h1></center>  
+        <div class="container">  
+        <center><h1>User Login Form</h1></center>  
 
-    {% if msg %}
-    <div class="alert alert-info alert-danger">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <p>{{msg}}</p>
-    </div>
-    {% endif %}
+        {% if msg %}
+        <div class="alert alert-info alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p>{{msg}}</p>
+        </div>
+        {% endif %}
 
-    <label><b>Email: </b></label><br>  
-    <input type="text" placeholder="Enter Email" name="email" required><br>
+        <label><b>Email: </b></label><br>  
+        <input type="text" placeholder="Enter Email" name="email" required><br>
 
-    <label><b>Password: </b></label><br> 
-    <input type="password" placeholder="Enter Password" name="password" required><br>  
+        <label><b>Password: </b></label><br> 
+        <input type="password" placeholder="Enter Password" name="password" required><br>  
 
-    <button type="submit" class="loginbtn">Login</button>   
-    
-    <div class="container signin">
-        <p>Already have an no account? <a href="{% url 'registration' %}">Sign up</a></p>
-    </div>
+        <button type="submit" class="loginbtn">Login</button>   
     </form>  
 {% endblock %}

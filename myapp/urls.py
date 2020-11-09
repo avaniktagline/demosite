@@ -19,8 +19,8 @@ from django.contrib import admin
 from . import views 
 
 urlpatterns = (
-    path('', views.Home.as_view(), name='index'),
-    url(r'^login$', views.Login.as_view(), name='login'),
-    url(r'^registration$', views.Signup.as_view(), name='registration'),
-    url(r'^logout$', views.logout, name='logout'),
+    path('', views.Home.as_view(), name='base'),
+    # url(r'^registration$', views.Signup.as_view(), name='registration'),
+    url(r'^login/$', views.Login.as_view(), name='login'),
+    url(r'^logout/$', views.logout, name='logout'),
 )
