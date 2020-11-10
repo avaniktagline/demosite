@@ -2,11 +2,15 @@
 <!DOCTYPE html>  
 <html>  
 <head>  
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
-   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  {% block js %}
+
+  {% endblock %}
 </head>  
 <body>  
     <nav class="navbar navbar-inverse">
@@ -18,14 +22,22 @@
 
         {% if request.session.user_login %}
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-user"></span>Logout</a></li>
+              <li><a href="javascript:;" class="editUser">Edit Profile</a></li>
+              <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-user"></span>Logout</a></li>
             </ul>
         {% endif %}
 
+        {% if request.session.user_login and request.session.user_data.is_admin %}
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="javascript:;" class="addCompany"><span></span>Add Company</a></li>
+            <li><a href=""><span></span>Add Employee</a></li>
+          </ul>
+        {% endif %}
+        
       </div>
     </nav>
-    {% block content %}  
-        
+    {% block content %}
+
     {% endblock %}
 </body>  
 </html>  

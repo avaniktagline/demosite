@@ -1,5 +1,108 @@
 {% extends "base.html" %}
 
 {% block content %}
+    {% if request.session.user_data.is_admin %}
+        <h1>Welcome to the admin</h1>
+    {% else %}
+        <h1>Welcome to the {{ request.session.user_data.name }}</h1>
+    {% endif %}
+
+    <div class="modal" id="userPopup" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title">UPDATE USER</h2>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form action="">{% csrf_token %}
+                    <div>  
+                        {% if request.session.user_data %}
+                        <label><b>Name: </b></label>   
+                        <input type="text" placeholder= "Enter Name" name="name" value="{{ user.name }}"><br>
+                        
+                        <label><b>Username: </b></label>
+                        <input type="text" placeholder= "Enter Username" name="username" value="{{ user.username }}"><br>
     
+                        <label><b>Email: </b></label> 
+                        <input type="text" placeholder="Enter Email" name="email" value="{{ user.email }}">  
+    
+                        <div>  
+                            <label><b>Gender: </b></label>  
+                            <input type="radio" value="male" name="gender" value="{{ user.gender }}"> Male   
+                            <input type="radio" value="female" name="gender" value="{{ user.gender }}"> Female  
+                            <input type="radio" value="Other" name="gender" value="{{ user.gender }}"> Other   
+                        </div>
+    
+                        <div>
+                            <label><b>Hobby: </b></label>
+                            <input type="checkbox" value="reading" name="chk" value="{{ user.hobby }}"> Reading
+                            <input type="checkbox" value="travelling" name="chk" value="{{ user.hobby }}"> Travelling
+                            <input type="checkbox" value="sports" name="chk" value="{{ user.hobby }}"> Sports
+                        </div>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary">Update</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+    <div class="modal" id="companyPopup" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">ADD COMPANY</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="">{% csrf_token %}
+                    <div>  
+                        <label><b>Name: </b></label>   
+                        <input type="text" placeholder= "Enter Company Name" name="name"><br>
+                        
+                        <label><b>Username: </b></label>
+                        <input type="text" placeholder= "Enter Address" name="address"><br>
+    
+                        <label><b>Moile no: </b></label> 
+                        <input type="number" placeholder="Enter Mobile" name="mobile"><br>
+    
+                        <label><b>Email: </b></label> 
+                        <input type="text" placeholder="Enter Email" name="email"><br>
+    
+                        <label><b>Website: </b></label> 
+                        <input type="text" placeholder="Enter website" name="website">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Update</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+    </div>
 {% endblock%}
+
+{% block js %}
+<script>
+    $(document).ready(function(){ 
+        $("body").on('click', '.editUser', function(){
+            $("#userPopup").modal('show');
+        });
+
+        $("body").on('click', '.addCompany', function(){
+            $("#companyPopup").modal('show');
+        });
+    });
+</script>
+{% endblock %}

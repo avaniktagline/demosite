@@ -14,14 +14,28 @@ class Home(generic.TemplateView):
 
     def get(self, request):
         user_login = request.session.get("user_login", False)
-        print("=====loging===", user_login)
         if user_login is True:
-            return HttpResponseRedirect('/')
+            u = request.session["user_data"]
+            user = User.objects.get(email=u['email'])
+            print(user.username, user.gender, user.hobby)
+            return render(request, self.template_name, {'user': u})
         else:
-            return render(request, self.template_name)
+            return HttpResponseRedirect('/login')
+
+    def post(self, request):
+        name = self.request.POST.get('name')
+        username = self.request.POST.get('username')
+        email = self.request.POST.get('email')
+        gender = self.request.POST.get('gender')
+        hobby = self.request.POST.getlist('chk')
+        password = self.request.POST.get('password')
+        try:
+            u = User.objects.create(name = name, username = username, email = email, gender = gender, hobby = hobby,)
+            return HttpResponseRedirect('/')
+        except Exception as e:
+            return render(request, self.template_name, {'msg':e})
     
 
-# @method_decorator(user_login_required, name='dispatch')    
 # class Signup(generic.TemplateView):
 #     template_name = 'registration.html'
 #     model = User
@@ -70,8 +84,7 @@ class Login(generic.TemplateView):
                 request.session['user_login'] = True
                 udata = {'name' : u.name, 'email' : u.email, 'is_admin' : u.is_admin }
                 request.session['user_data'] = udata
-                print(udata)
-                return redirect('/')
+                return HttpResponseRedirect('/')
             else:
                 return render(request, self.template_name, {'msg': message})
         except Exception:
@@ -83,3 +96,4 @@ def logout(request):
     if request.session["user_login"]:
         del request.session['user_login']
     return HttpResponseRedirect('/login')
+    
