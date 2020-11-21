@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if msg %}
+    <div class="alert alert-info alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <p>{{msg}}</p>
+    </div>
+    {% endif %}
+
+    <button type="button" class="btn btn-primary addEmployee" >Add Employee</i></button>
+    <div class="modal" id="employeePopup" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">ADD EMPLOYEE</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="">{% csrf_token %}
+                    <div>  
+                        <label><b>Name: </b></label>   
+                        <input type="text" placeholder= "Enter Name" id="ename"><br>
+
+                        <label><b>Username: </b></label>   
+                        <input type="text" placeholder= "Enter Username" id="eusername"><br>
+
+                        <label><b>Email: </b></label> 
+                        <input type="text" placeholder="Enter Email" id="eemail">  
+
+                        <div>  
+                            <label><b>Gender: </b></label>  
+                            <input type="radio" value="male" id="egender"> Male   
+                            <input type="radio" value="female" id="egender"> Female  
+                            <input type="radio" value="Other" id="egender"> Other   
+                        </div>
+
+                        <div>
+                            <label><b>Hobby: </b></label>
+                            <input type="checkbox" value="reading" id="echk"> Reading
+                            <input type="checkbox" value="travelling" id="echk"> Travelling
+                            <input type="checkbox" value="sports" id="echk"> Sports
+                        </div>
+
+                        <div>
+                            <label><b>Company: </b></label>
+                            <select id="company">
+                                {% for c in companies %}
+                                <option value="{{ c.id }}">{{ c.c_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <label><b>Password: </b></label>
+                        <input type="password" placeholder="Enter Password" id="epassword"><br>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="updateEmployee">Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>Hobby</th>
+                <th>Company</th>
+                <th>Action</th>
+            </tr>          
+        </thead>
+        <tbody>
+            {% if users %}
+            {% with count=1  %}
+                {% for employee in users %}
+                    {% if not employee.is_admin %}
+                    <tr>
+                        <td>{{ count }}</td>
+                        <td>{{ employee.name }}</td>
+                        <td>{{ employee.username }}</td>
+                        <td>{{ employee.email }}</td>
+                        <td>{{ employee.gender }}</td>
+                        <td>{{ employee.hobby }}</td>
+                        <td>{{ employee.company_id }}</td>
+                        <td>
+                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#update-employee-modal" id="editEmployee">Edit</button>
+                            <button type="button" class="btn btn-danger" id="edit_company">Delete</button>
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            {% endwith %}
+            {% else %}
+                No users
+            {% endif %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function(){ 
+        $("body").on('click', '.addEmployee', function(){
+            $("#employeePopup").modal('show');
+        });
+
+        $("#add_employee").click(function(){
+            name = $("#ename").val();
+            username = $("#eusername").val();
+            email = $("#eemail").val();
+            gender = $("input[type='radio']:checked").val();
+            hobby = [];
+            $.each($("input[type='checkbox']:checked"), function(){
+                hobby.push($(this).val());
+            });
+            console.log(hobby); 
+            company = $("#company").val();
+            password = $("#epassword").val();
+
+            $.ajax({
+                url: "{% url 'listemployee' %}",
+                type: "POST",
+                data: {
+                    'name': name,
+                    'username': username,
+                    'email': email,
+                    'gender': gender,
+                    'hobby': hobby,
+                    'company': company,
+                    'password':password,
+                },
+                success: function(data, status, xhr){
+                    if(data.status == "success")
+                    {
+                        $('#employeePopup').modal('hide');
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

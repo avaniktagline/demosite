@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <button type="button" class="btn btn-primary addCompany">Add Company</i></button>
+    <div class="modal" id="companyPopup" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">ADD COMPANY</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="">{% csrf_token %}
+                    <div>  
+                        <div id="alertdiv" class="alert alert-info" style="display:none;">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <p></p>
+                        </div> 
+                        <label><b>Name: </b></label>   
+                        <input type="text" id="cname" placeholder="Enter company name" required=""><br>
+                        
+                        <label><b>Address: </b></label>
+                        <input type="text" id="caddress" placeholder="Enter address" required=""><br>
+    
+                        <label><b>Mobile no: </b></label> 
+                        <input type="number" id="cmobile" placeholder="Enter mobile number" required=""><br>
+    
+                        <label><b>Email: </b></label> 
+                        <input type="text" id="cemail" placeholder="Enter email" required=""><br>
+    
+                        <label><b>Website: </b></label> 
+                        <input type="text" id="cwebsite" placeholder="Enter website link" required="">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="add_company">Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Address</th>
+                <th>Website</th>
+                <th>Action</th>
+            </tr>          
+        </thead>
+        <tbody>
+            {% if companies %}
+            {% for company in companies %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ company.c_name }}</td>
+                <td>{{ company.email }}</td>
+                <td>{{ company.mobile }}</td>
+                <td>{{ company.address }}</td>
+                <td>{{ company.website }}</td>
+                <td>
+                    <button type="button" class="btn btn-success" id="editCompany">Edit</button>
+                    <button type="button" class="btn btn-danger" id="editCompany">Delete</button>
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            No companies
+            {% endif %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function(){ 
+        $("body").on('click', '.addCompany', function(){
+            $("#companyPopup").modal('show');
+        });
+
+        $("#add_company").click(function(){
+            cname = $("#cname").val();
+            caddress = $("#caddress").val();
+            cmobile = $("#cmobile").val();
+            cemail = $("#cemail").val();
+            cwebsite = $("#cwebsite").val();
+
+            $.ajax({
+                url: "{% url 'listcompany' %}",
+                type: "POST",
+                data: {
+                    'cname': cname,
+                    'caddress': caddress,
+                    'cmobile': cmobile,
+                    'cemail': cemail,
+                    'cwebsite': cwebsite,
+                },
+                success: function(data, status, xhr){
+                    if(data.success == "True")
+                    {
+                        $("#alertdiv").removeClass("alert-danger").addClass("alert-success")
+                    }
+                    else
+                    {
+                        $("#alertdiv").removeClass("alert-success").addClass("alert-danger")
+                    }
+                    $("#alertdiv p").html(data.msg)
+                    $("#alertdiv").show();
+                },
+            });
+        });
+
+        $("body").on('click', '#editCompany', function(){
+            $("#companyPopup").modal('show');
+        });
+    });
+</script>
+{% endblock %}

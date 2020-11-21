@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
   {% block js %}
 
   {% endblock %}
@@ -21,16 +21,16 @@
         </div>
 
         {% if request.session.user_login %}
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="javascript:;" class="editUser">Edit Profile</a></li>
-              <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-user"></span>Logout</a></li>
-            </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="javascript:;" class="editUser">Edit Profile</a></li>
+          <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-user"></span>Logout</a></li>
+        </ul>
         {% endif %}
 
         {% if request.session.user_login and request.session.user_data.is_admin %}
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="javascript:;" class="addCompany"><span></span>Add Company</a></li>
-            <li><a href=""><span></span>Add Employee</a></li>
+            <li><a href="{% url 'listcompany' %}"><span></span>Add Company</a></li>
+            <li><a href="{% url 'listemployee' %}"><span></span>Add Employee</a></li>
           </ul>
         {% endif %}
         
@@ -41,3 +41,41 @@
     {% endblock %}
 </body>  
 </html>  
+
+
+<script>
+  var headerconfig = null;
+  function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie != '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = jQuery.trim(cookies[i]);
+              if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+
+  function csrfSafeMethod(method) {
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+  }
+
+  var csrftoken = getCookie('csrftoken');
+  $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+          if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+              xhr.setRequestHeader("X-CSRFToken", csrftoken);
+          }
+      },
+      cache: true
+  });
+  headerconfig = {
+      "X-CSRFToken": csrftoken
+  };
+</script>
+
+

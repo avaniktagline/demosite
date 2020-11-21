@@ -2,96 +2,62 @@
 
 {% block content %}
     {% if request.session.user_data.is_admin %}
-        <h1>Welcome to the admin</h1>
+        <h1>Welcome to admin</h1>
     {% else %}
-        <h1>Welcome to the {{ request.session.user_data.name }}</h1>
+        <h1>Welcome to {{ request.session.user_data.name }}</h1>
     {% endif %}
 
     <div class="modal" id="userPopup" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h2 class="modal-title">UPDATE USER</h2>
+              <h2 class="modal-title">Edit Profile</h2>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-                <form action="">{% csrf_token %}
-                    <div>  
+                <form action="" id="editProfile">{% csrf_token %}
+                    <div> 
+                        <div id="alertdiv" class="alert alert-info" style="display:none;">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <p></p>
+                        </div> 
                         {% if request.session.user_data %}
                         <label><b>Name: </b></label>   
-                        <input type="text" placeholder= "Enter Name" name="name" value="{{ user.name }}"><br>
+                        <input type="text" id="name" name="name" value="{{ user.name }}"><br>
                         
                         <label><b>Username: </b></label>
-                        <input type="text" placeholder= "Enter Username" name="username" value="{{ user.username }}"><br>
+                        <input type="text" id="username" name="username" value="{{ user.username }}"><br>
     
                         <label><b>Email: </b></label> 
-                        <input type="text" placeholder="Enter Email" name="email" value="{{ user.email }}">  
+                        <input type="text" id="email" name="email" value="{{ user.email }}">  
     
                         <div>  
                             <label><b>Gender: </b></label>  
-                            <input type="radio" value="male" name="gender" value="{{ user.gender }}"> Male   
-                            <input type="radio" value="female" name="gender" value="{{ user.gender }}"> Female  
-                            <input type="radio" value="Other" name="gender" value="{{ user.gender }}"> Other   
-                        </div>
+                            <input type="radio" value="male" id="gender" name="gender" {% if user.gender == "male" %} checked {% endif %}> Male   
+                            <input type="radio" value="female" id="gender" name="gender" {% if user.gender == "female" %} checked {% endif %}> Female  
+                            <input type="radio" value="other" id="gender" name="gender" {% if user.gender == "other" %} checked {% endif %}> Other  
+                        </div> 
     
                         <div>
                             <label><b>Hobby: </b></label>
-                            <input type="checkbox" value="reading" name="chk" value="{{ user.hobby }}"> Reading
-                            <input type="checkbox" value="travelling" name="chk" value="{{ user.hobby }}"> Travelling
-                            <input type="checkbox" value="sports" name="chk" value="{{ user.hobby }}"> Sports
+                            <input type="checkbox" value="reading" id="hobby" name="chk" {% if "reading" in user.hobby %} checked {% endif %}> Reading
+                            <input type="checkbox" value="travelling" id="hobby" name="chk" {% if "travelling" in user.hobby  %} checked {% endif %}> Travelling
+                            <input type="checkbox" value="sports" id="hobby" name="chk" {% if "sports" in user.hobby %} checked {% endif %}> Sports
                         </div>
                         {% endif %}
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary">Update</button>
+              <button type="button" class="btn btn-primary" id="up_user">Update</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
           </div>
         </div>
     </div>
-
-
-    <div class="modal" id="companyPopup" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">ADD COMPANY</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="">{% csrf_token %}
-                    <div>  
-                        <label><b>Name: </b></label>   
-                        <input type="text" placeholder= "Enter Company Name" name="name"><br>
-                        
-                        <label><b>Username: </b></label>
-                        <input type="text" placeholder= "Enter Address" name="address"><br>
-    
-                        <label><b>Moile no: </b></label> 
-                        <input type="number" placeholder="Enter Mobile" name="mobile"><br>
-    
-                        <label><b>Email: </b></label> 
-                        <input type="text" placeholder="Enter Email" name="email"><br>
-    
-                        <label><b>Website: </b></label> 
-                        <input type="text" placeholder="Enter website" name="website">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Update</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-            </div>
-        </div>
-    </div>
-{% endblock%}
+{% endblock %}
 
 {% block js %}
 <script>
@@ -100,8 +66,39 @@
             $("#userPopup").modal('show');
         });
 
-        $("body").on('click', '.addCompany', function(){
-            $("#companyPopup").modal('show');
+        $("#up_user").click(function(){
+            name = $("#name").val();
+            username = $("#username").val();
+            email = $("#email").val();
+            gender = $("input[type='radio']:checked").val();
+            hobby = [];
+            $.each($("input[type='checkbox']:checked"), function(){
+                hobby.push($(this).val());
+            });
+
+            $.ajax({
+                url: "{% url 'edituser' user.id %}",
+                type: "POST",
+                data: {
+                    'name': name,
+                    'username': username,
+                    'email': email,
+                    'gender': gender,
+                    'hobby': hobby,
+                },
+                success: function(data, status, xhr){
+                    if(data.success == "True")
+                    {
+                        $("#alertdiv").removeClass("alert-danger").addClass("alert-success")
+                    }
+                    else
+                    {
+                        $("#alertdiv").removeClass("alert-success").addClass("alert-danger")
+                    }
+                    $("#alertdiv p").html(data.msg)
+                    $("#alertdiv").show();
+                }
+            });
         });
     });
 </script>
