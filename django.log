@@ -798,8 +798,7 @@ Traceback (most recent call last):
   File "/home/avanik/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
     return handler(request, *args, **kwargs)
 TypeError: patch() got an unexpected keyword argument 'id'
-2020-11-11 10:00:33,367 [WARNING]- Method Not Allowed (PATCH): /edituser/2
-2020-11-11 10:00:57,465 [ERROR]- Internal Server Error: /edituser/2
+2020-11-23 06:32:56,885 [ERROR]- Internal Server Error: /
 Traceback (most recent call last):
   File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
     response = get_response(request)
@@ -811,8 +810,14 @@ Traceback (most recent call last):
     return self.dispatch(request, *args, **kwargs)
   File "/home/avanik/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
     return handler(request, *args, **kwargs)
-TypeError: patch() got an unexpected keyword argument 'id'
-2020-11-11 10:01:32,724 [ERROR]- Internal Server Error: /edituser/2
+  File "/home/avanik/projects/demo/myapp/views.py", line 21, in get
+    user = User.objects.get(email=u['email'])
+  File "/home/avanik/env/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/db/models/query.py", line 403, in get
+    self.model._meta.object_name
+myapp.models.DoesNotExist: User matching query does not exist.
+2020-11-23 06:33:35,870 [ERROR]- Internal Server Error: /
 Traceback (most recent call last):
   File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
     response = get_response(request)
@@ -824,9 +829,14 @@ Traceback (most recent call last):
     return self.dispatch(request, *args, **kwargs)
   File "/home/avanik/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
     return handler(request, *args, **kwargs)
-TypeError: patch() got multiple values for argument 'id'
-2020-11-11 10:08:39,393 [WARNING]- Not Found: /favicon.ico
-2020-11-11 10:20:01,946 [ERROR]- Internal Server Error: /edituser/2
+  File "/home/avanik/projects/demo/myapp/views.py", line 21, in get
+    user = User.objects.get(email=u['email'])
+  File "/home/avanik/env/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/db/models/query.py", line 403, in get
+    self.model._meta.object_name
+myapp.models.DoesNotExist: User matching query does not exist.
+2020-11-23 07:00:33,540 [ERROR]- Internal Server Error: /
 Traceback (most recent call last):
   File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
     response = get_response(request)
@@ -838,11 +848,40 @@ Traceback (most recent call last):
     return self.dispatch(request, *args, **kwargs)
   File "/home/avanik/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
     return handler(request, *args, **kwargs)
-  File "/home/avanik/projects/demo/myapp/views.py", line 92, in patch
-    user_id = request.PATCH.get('id')
-AttributeError: 'WSGIRequest' object has no attribute 'PATCH'
-
-2020-11-13 06:23:57,172 [ERROR]- Internal Server Error: /listemployee
+  File "/home/avanik/projects/demo/myapp/views.py", line 22, in get
+    company.objects.all()
+NameError: name 'company' is not defined
+2020-11-23 07:00:33,939 [ERROR]- Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/avanik/projects/demo/myapp/views.py", line 22, in get
+    company.objects.all()
+NameError: name 'company' is not defined
+2020-11-23 07:00:34,305 [ERROR]- Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 128, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/views/generic/base.py", line 69, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/avanik/projects/demo/myapp/views.py", line 22, in get
+    company.objects.all()
+NameError: name 'company' is not defined
+2020-11-23 09:28:15,658 [ERROR]- Internal Server Error: /listcompany
 Traceback (most recent call last):
   File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
     response = get_response(request)
@@ -852,60 +891,251 @@ Traceback (most recent call last):
     response = response.render()
   File "/home/avanik/env/lib/python3.6/site-packages/django/template/response.py", line 106, in render
     self.content = self.rendered_content
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/response.py", line 81, in rendered_content
-    template = self.resolve_template(self.template_name)
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/response.py", line 63, in resolve_template
-    return select_template(template, using=self.using)
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/loader.py", line 42, in select_template
-    return engine.get_template(template_name)
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/backends/django.py", line 34, in get_template
-    return Template(self.engine.get_template(template_name), self)
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/engine.py", line 144, in get_template
-    template, origin = self.find_template(template_name)
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/engine.py", line 126, in find_template
-    template = loader.get_template(name, skip=skip)
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/loaders/base.py", line 30, in get_template
-    contents, origin, origin.template_name, self.engine,
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 160, in __init__
-    self.nodelist = self.compile_nodelist()
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 198, in compile_nodelist
-    return parser.parse()
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 483, in parse
-    raise self.error(token, e)
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 481, in parse
-    compiled_result = compile_func(self, token)
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/loader_tags.py", line 290, in do_extends
-    nodelist = parser.parse()
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 483, in parse
-    raise self.error(token, e)
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 481, in parse
-    compiled_result = compile_func(self, token)
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/loader_tags.py", line 233, in do_block
-    nodelist = parser.parse(('endblock',))
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 483, in parse
-    raise self.error(token, e)
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 481, in parse
-    compiled_result = compile_func(self, token)
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/defaulttags.py", line 956, in do_if
-    nodelist = parser.parse(('elif', 'else', 'endif'))
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 483, in parse
-    raise self.error(token, e)
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 481, in parse
-    compiled_result = compile_func(self, token)
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/defaulttags.py", line 815, in do_for
-    nodelist_loop = parser.parse(('empty', 'endfor',))
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 483, in parse
-    raise self.error(token, e)
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 481, in parse
-    compiled_result = compile_func(self, token)
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/defaulttags.py", line 956, in do_if
-    nodelist = parser.parse(('elif', 'else', 'endif'))
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 454, in parse
-    raise self.error(token, e)
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 452, in parse
-    filter_expression = self.compile_filter(token.contents)
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 568, in compile_filter
-    return FilterExpression(token, self)
-  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 668, in __init__
-    "from '%s'" % (token[upto:], token))
-django.template.exceptions.TemplateSyntaxError: Could not parse the remainder: '-1' from 'forloop.counter-1'
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/response.py", line 83, in rendered_content
+    content = template.render(context, self._request)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 943, in render
+    bit = node.render_annotated(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 910, in render_annotated
+    return self.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/loader_tags.py", line 155, in render
+    return compiled_parent._render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 943, in render
+    bit = node.render_annotated(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 910, in render_annotated
+    return self.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/loader_tags.py", line 67, in render
+    result = block.nodelist.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 943, in render
+    bit = node.render_annotated(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 910, in render_annotated
+    return self.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/defaulttags.py", line 447, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/urls/base.py", line 88, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "/home/avanik/env/lib/python3.6/site-packages/django/urls/resolvers.py", line 632, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'deletecompany' not found. 'deletecompany' is not a valid view function or pattern name.
+2020-11-23 09:28:44,812 [ERROR]- Internal Server Error: /listcompany
+Traceback (most recent call last):
+  File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 158, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 156, in _get_response
+    response = response.render()
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/response.py", line 106, in render
+    self.content = self.rendered_content
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/response.py", line 83, in rendered_content
+    content = template.render(context, self._request)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 943, in render
+    bit = node.render_annotated(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 910, in render_annotated
+    return self.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/loader_tags.py", line 155, in render
+    return compiled_parent._render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 943, in render
+    bit = node.render_annotated(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 910, in render_annotated
+    return self.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/loader_tags.py", line 67, in render
+    result = block.nodelist.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 943, in render
+    bit = node.render_annotated(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 910, in render_annotated
+    return self.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/defaulttags.py", line 447, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/urls/base.py", line 88, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "/home/avanik/env/lib/python3.6/site-packages/django/urls/resolvers.py", line 632, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'deletecompany' not found. 'deletecompany' is not a valid view function or pattern name.
+2020-11-23 09:37:59,764 [ERROR]- Internal Server Error: /listcompany
+Traceback (most recent call last):
+  File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 158, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 156, in _get_response
+    response = response.render()
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/response.py", line 106, in render
+    self.content = self.rendered_content
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/response.py", line 83, in rendered_content
+    content = template.render(context, self._request)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 943, in render
+    bit = node.render_annotated(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 910, in render_annotated
+    return self.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/loader_tags.py", line 155, in render
+    return compiled_parent._render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 943, in render
+    bit = node.render_annotated(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 910, in render_annotated
+    return self.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/loader_tags.py", line 67, in render
+    result = block.nodelist.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 943, in render
+    bit = node.render_annotated(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 910, in render_annotated
+    return self.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/defaulttags.py", line 447, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/urls/base.py", line 88, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "/home/avanik/env/lib/python3.6/site-packages/django/urls/resolvers.py", line 632, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'editcompany' with arguments '('',)' not found. 1 pattern(s) tried: ['editcompany\\/(?P<id>[0-9]+)$']
+2020-11-23 09:38:23,381 [ERROR]- Internal Server Error: /listcompany
+Traceback (most recent call last):
+  File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 158, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 156, in _get_response
+    response = response.render()
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/response.py", line 106, in render
+    self.content = self.rendered_content
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/response.py", line 83, in rendered_content
+    content = template.render(context, self._request)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 943, in render
+    bit = node.render_annotated(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 910, in render_annotated
+    return self.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/loader_tags.py", line 155, in render
+    return compiled_parent._render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 943, in render
+    bit = node.render_annotated(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 910, in render_annotated
+    return self.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/loader_tags.py", line 67, in render
+    result = block.nodelist.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 943, in render
+    bit = node.render_annotated(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 910, in render_annotated
+    return self.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/defaulttags.py", line 447, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/urls/base.py", line 88, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "/home/avanik/env/lib/python3.6/site-packages/django/urls/resolvers.py", line 632, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'editcompany' with no arguments not found. 1 pattern(s) tried: ['editcompany\\/(?P<id>[0-9]+)$']
+2020-11-23 12:37:59,678 [ERROR]- Internal Server Error: /listemployee
+Traceback (most recent call last):
+  File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 158, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 156, in _get_response
+    response = response.render()
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/response.py", line 106, in render
+    self.content = self.rendered_content
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/response.py", line 83, in rendered_content
+    content = template.render(context, self._request)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 943, in render
+    bit = node.render_annotated(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 910, in render_annotated
+    return self.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/loader_tags.py", line 155, in render
+    return compiled_parent._render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 943, in render
+    bit = node.render_annotated(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 910, in render_annotated
+    return self.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/loader_tags.py", line 67, in render
+    result = block.nodelist.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 943, in render
+    bit = node.render_annotated(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 910, in render_annotated
+    return self.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/defaulttags.py", line 447, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/urls/base.py", line 88, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "/home/avanik/env/lib/python3.6/site-packages/django/urls/resolvers.py", line 632, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'editemployee' with arguments '(18,)' not found. 1 pattern(s) tried: ['editemployee$']
+2020-11-23 12:38:03,889 [ERROR]- Internal Server Error: /listemployee
+Traceback (most recent call last):
+  File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/exception.py", line 35, in inner
+    response = get_response(request)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 158, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/core/handlers/base.py", line 156, in _get_response
+    response = response.render()
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/response.py", line 106, in render
+    self.content = self.rendered_content
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/response.py", line 83, in rendered_content
+    content = template.render(context, self._request)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 943, in render
+    bit = node.render_annotated(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 910, in render_annotated
+    return self.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/loader_tags.py", line 155, in render
+    return compiled_parent._render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 943, in render
+    bit = node.render_annotated(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 910, in render_annotated
+    return self.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/loader_tags.py", line 67, in render
+    result = block.nodelist.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 943, in render
+    bit = node.render_annotated(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/base.py", line 910, in render_annotated
+    return self.render(context)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/template/defaulttags.py", line 447, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/avanik/env/lib/python3.6/site-packages/django/urls/base.py", line 88, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "/home/avanik/env/lib/python3.6/site-packages/django/urls/resolvers.py", line 632, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'editemployee' with arguments '(18,)' not found. 1 pattern(s) tried: ['editemployee$']

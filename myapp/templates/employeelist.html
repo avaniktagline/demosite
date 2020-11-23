@@ -13,7 +13,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">ADD EMPLOYEE</h2>
+                <h2 class="modal-title">Add Employee</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -21,27 +21,31 @@
             <div class="modal-body">
                 <form action="">{% csrf_token %}
                     <div>  
+                        <div id="alertdiv" class="alert alert-info" style="display:none;">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <p></p>
+                        </div>
                         <label><b>Name: </b></label>   
-                        <input type="text" placeholder= "Enter Name" id="ename"><br>
+                        <input type="text" placeholder= "Enter Name" id="ename" value=""><br>
 
                         <label><b>Username: </b></label>   
-                        <input type="text" placeholder= "Enter Username" id="eusername"><br>
+                        <input type="text" placeholder= "Enter Username" id="eusername" value=""><br>
 
                         <label><b>Email: </b></label> 
-                        <input type="text" placeholder="Enter Email" id="eemail">  
+                        <input type="text" placeholder="Enter Email" id="eemail" value="">  
 
                         <div>  
                             <label><b>Gender: </b></label>  
-                            <input type="radio" value="male" id="egender"> Male   
-                            <input type="radio" value="female" id="egender"> Female  
-                            <input type="radio" value="Other" id="egender"> Other   
+                            <input type="radio" value="male" class="egender"> Male   
+                            <input type="radio" value="female" class="egender"> Female  
+                            <input type="radio" value="Other" class="egender"> Other   
                         </div>
 
                         <div>
                             <label><b>Hobby: </b></label>
-                            <input type="checkbox" value="reading" id="echk"> Reading
-                            <input type="checkbox" value="travelling" id="echk"> Travelling
-                            <input type="checkbox" value="sports" id="echk"> Sports
+                            <input type="checkbox" value="reading" class="echk"> Reading
+                            <input type="checkbox" value="travelling" class="echk"> Travelling
+                            <input type="checkbox" value="sports" class="echk"> Sports
                         </div>
 
                         <div>
@@ -52,13 +56,15 @@
                                 {% endfor %}
                             </select>
                         </div>
-                        <label><b>Password: </b></label>
-                        <input type="password" placeholder="Enter Password" id="epassword"><br>
+
+                        <label id="lpassword"><b>Password: </b></label>
+                        <input type="password" placeholder="Enter Password" id="epassword" value=""><br>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="updateEmployee">Submit</button>
+                <button type="button" class="btn btn-primary" id="addEmployee">Submit</button>
+                <button class="btn btn-primary" type="button" id="updateEmployee" style="display:none;">Update</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
             </div>
@@ -83,17 +89,17 @@
             {% with count=1  %}
                 {% for employee in users %}
                     {% if not employee.is_admin %}
-                    <tr>
+                    <tr id="employee-{{employee.id}}">
                         <td>{{ count }}</td>
-                        <td>{{ employee.name }}</td>
-                        <td>{{ employee.username }}</td>
-                        <td>{{ employee.email }}</td>
-                        <td>{{ employee.gender }}</td>
-                        <td>{{ employee.hobby }}</td>
-                        <td>{{ employee.company_id }}</td>
+                        <td class="ename">{{ employee.name }}</td>
+                        <td class="eusername">{{ employee.username }}</td>
+                        <td class="eemail">{{ employee.email }}</td>
+                        <td class="egender">{{ employee.gender }}</td>
+                        <td class="ehobby">{{ employee.hobby }}</td>
+                        <td class="ecompany_id">{{ employee.company_id }}</td>
                         <td>
-                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#update-employee-modal" id="editEmployee">Edit</button>
-                            <button type="button" class="btn btn-danger" id="edit_company">Delete</button>
+                            <button type="button" class="btn btn-success" id="editEmployee" data-id="{{employee.id}}">Edit</button>
+                            <button type="button" class="btn btn-danger" id="deleteEmployee" data-id="{{employee.id}}">Delete</button>
                         </td>
                     </tr>
                     {% endif %}
@@ -113,7 +119,7 @@
             $("#employeePopup").modal('show');
         });
 
-        $("#add_employee").click(function(){
+        $("#addEmployee").click(function(){
             name = $("#ename").val();
             username = $("#eusername").val();
             email = $("#eemail").val();
@@ -139,16 +145,102 @@
                     'password':password,
                 },
                 success: function(data, status, xhr){
-                    if(data.status == "success")
+                    if(data.success == "True")
                     {
-                        $('#employeePopup').modal('hide');
+                        $("#alertdiv").removeClass("alert-danger").addClass("alert-success")
                     }
+                    else
+                    {
+                        $("#alertdiv").removeClass("alert-success").addClass("alert-danger")
+                    }
+                    $("#alertdiv p").html(data.msg)
+                    $("#alertdiv").show();
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    
+            });
+        });
+
+        $("body").on('click', '#editEmployee', function(){
+            id = $(this).attr('data-id');
+            $.ajax({
+                url: "{% url 'editemployee' %}",
+                type: 'GET',
+                data: {
+                    'user_id' : id,
+                },
+                success: function(data, status, xhr){
+                    $('#ename').val(data.name);
+                    $('#eusername').val(data.username);
+                    $('#eemail').val(data.email);
+                    $("input[type=radio][ value=" + data.gender + "]").prop('checked', true);
+                    var hobbies = JSON.parse(data.hobby.replace(/'/g,'"'));
+                    $.each(hobbies, function (index, value) {
+                        $("input[type=checkbox][ value=" + value + "]").prop('checked', true);
+                    });
+                    $('#company').val(data.company);
+                    $("#employeePopup").modal('show');
+                    $(".modal-title").replaceWith("<h2>Edit Employee</h2>");
+                    $("#lpassword").hide();
+                    $("#epassword").hide();
+                    $("#updateEmployee").show();
+                    $("#addEmployee").hide();
+                },
+            });
+        });
+
+        $("#updateEmployee").click(function(){
+            name = $("#name").val();
+            username = $("#username").val();
+            email = $("#email").val();
+            gender = $("input[type='radio']:checked").val();
+            hobby = [];
+            $.each($("input[type='checkbox']:checked"), function(){
+                hobby.push($(this).val());
+            });
+            company = $("#company").val();
+
+            $.ajax({
+                url: "{% url 'editemployee' %}",
+                type: "POST",
+                data: {
+                    'user_id': id,
+                    'name': name,
+                    'username': username,
+                    'email': email,
+                    'gender': gender,
+                    'hobby': hobby,
+                    'company': company,
+                },
+                success: function(data, status, xhr){
+                    if(data.success == "True")
+                    {
+                        $("#alertdiv").removeClass("alert-danger").addClass("alert-success")
+                    }
+                    else
+                    {
+                        $("#alertdiv").removeClass("alert-success").addClass("alert-danger")
+                    }
+                    $("#alertdiv p").html(data.msg)
+                    $("#alertdiv").show();
                 }
             });
         });
-    });
+
+        $("body").on('click', '#deleteEmployee', function(){
+            id = $(this).attr('data-id');
+            $.ajax({
+                url: "{% url 'deleteemployee' %}",
+                type: 'GET',
+                data: {
+                    'user_id' : id,
+                },
+                success: function(data, status, xhr){
+                    if(data.success == "True")
+                    {
+                        location.reload();
+                    }
+                },
+            });
+        });
+    }); 
 </script>
 {% endblock %}

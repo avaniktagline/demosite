@@ -25,5 +25,9 @@ urlpatterns = [
     url(r'^logout/$', views.logout, name='logout'),
     path('edituser/<int:id>', views.EditUser.as_view(), name='edituser'),
     path('listcompany', views.ListCompany.as_view(), name='listcompany'),
-    path('listemployee', views.ListEmployee.as_view(), name='listemployee')
+    path('editcompany', views.EditCompany.as_view(), name='editcompany'),
+    path('deletecompany', views.DeleteCompany.as_view(), name='deletecompany'),
+    path('listemployee', views.ListEmployee.as_view(), name='listemployee'),
+    path('editemployee', views.EditEmployee.as_view(), name='editemployee'),
+    path('deleteemployee', views.DeleteEmployee.as_view(), name='deleteemployee'),
 ]

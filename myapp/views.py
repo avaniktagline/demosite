@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
+from django.core import serializers
+import json
 from django.views.generic import TemplateView
 from django.views import generic
+from django.views.generic.base import View
 from django.contrib import messages
 from .models import *
 from django.contrib.auth import *
@@ -12,7 +15,7 @@ from django.contrib.auth.hashers import make_password
 class Home(generic.TemplateView):
     template_name = 'index.html'
     model = Company
-
+    
     def get(self, request):
         user_login = request.session.get("user_login", False)
         if user_login is True:
@@ -133,6 +136,49 @@ class ListCompany(generic.TemplateView):
             return JsonResponse({'success': 'False', 'msg':str(e)})
 
 
+class EditCompany(generic.TemplateView):
+    template_name = 'companylist.html'
+    model = Company
+
+    def get(self, request, *args, **kwargs):
+        company_id = self.request.GET.get('company_id')
+        cdata = Company.objects.filter(id=company_id)
+        company_list = serializers.serialize('json', cdata)
+        # print("==========json data==", json.loads(company_list)[0]['fields'])
+        return JsonResponse(json.loads(company_list)[0]['fields'])
+
+    def post(self, request, *args, **kwargs):
+        company_id = request.POST.get('company_id')
+        cname = request.POST.get('cname')
+        email = request.POST.get('email')
+        mobile = request.POST.get('mobile')
+        address = request.POST.get('address')
+        website = request.POST.get('website')        
+        # print(request.POST)
+        try:
+            company = Company.objects.get(id=company_id)
+            company.c_name = cname
+            company.email = email
+            company.mobile = mobile
+            company.address = address
+            company.website = website
+            company.save()
+            message = "Company details successfully updated"
+            return JsonResponse({'success': 'True', 'msg':message})
+        except Exception as e:
+            return JsonResponse({'success': 'False', 'msg':str(e)})
+
+
+class DeleteCompany(View):
+    def get(self, request, *args, **kwargs):
+        company_id = self.request.GET.get('company_id')
+        Company.objects.filter(id=company_id).delete()
+        data = {
+            'deleted': True
+        }
+        return JsonResponse({'success': 'True'})
+
+
 class ListEmployee(generic.TemplateView):
     template_name = 'employeelist.html'
     model = User, Company
@@ -155,7 +201,52 @@ class ListEmployee(generic.TemplateView):
             u = User.objects.create(name = name, username = username, email = email, gender = gender, hobby = hobby, company_id = company,)
             u.password = make_password(password = password)
             u.save()
-            return JsonResponse({'status': 'success', 'msg':message})
+            message = "Employee added successfully"
+            return JsonResponse({'success': 'True', 'msg':message})
         except Exception as e:
-            print(e)
-            return JsonResponse({'status': 'fail', 'msg':str(e)})
+            return JsonResponse({'success': 'False', 'msg':str(e)})
+
+
+class EditEmployee(generic.TemplateView):
+    template_name = 'employeelist.html'
+    model = User
+
+    def get(self, request, *args, **kwargs):
+        user_id = self.request.GET.get('user_id')
+        udata = User.objects.filter(id=user_id)
+        user_list = serializers.serialize('json', udata)
+        # print("==========json data==", json.loads(user_list)[0]['fields'])
+        return JsonResponse(json.loads(user_list)[0]['fields'])
+
+    def post(self, request, *args, **kwargs):
+        user_id = request.POST.get('user_id')
+        name = request.POST.get('name')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        gender = request.POST.get('gender')
+        hobby = request.POST.getlist('hobby[]')
+        company = request.POST.get('website')        
+        print(request.POST)
+        try:
+            employee = User.objects.get(id=user_id)
+            employee.name = name
+            employee.username = username
+            employee.email = email
+            employee.gender = gender
+            employee.hobby = hobby
+            employee.company = company
+            employee.save()
+            message = "Employee details successfully updated"
+            return JsonResponse({'success': 'True', 'msg':message})
+        except Exception as e:
+            return JsonResponse({'success': 'False', 'msg':str(e)})
+
+
+class DeleteEmployee(View):
+    def get(self, request, *args, **kwargs):
+        user_id = self.request.GET.get('user_id')
+        User.objects.filter(id=user_id).delete()
+        data = {
+            'deleted': True
+        }
+        return JsonResponse({'success': 'True'})
