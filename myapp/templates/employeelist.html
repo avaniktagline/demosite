@@ -19,47 +19,61 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="">{% csrf_token %}
-                    <div>  
-                        <div id="alertdiv" class="alert alert-info" style="display:none;">
-                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                            <p></p>
-                        </div>
-                        <label><b>Name: </b></label>   
-                        <input type="text" placeholder= "Enter Name" id="ename" value=""><br>
-
-                        <label><b>Username: </b></label>   
-                        <input type="text" placeholder= "Enter Username" id="eusername" value=""><br>
-
-                        <label><b>Email: </b></label> 
-                        <input type="text" placeholder="Enter Email" id="eemail" value="">  
-
-                        <div>  
-                            <label><b>Gender: </b></label>  
-                            <input type="radio" value="male" class="egender"> Male   
-                            <input type="radio" value="female" class="egender"> Female  
-                            <input type="radio" value="Other" class="egender"> Other   
-                        </div>
-
-                        <div>
-                            <label><b>Hobby: </b></label>
-                            <input type="checkbox" value="reading" class="echk"> Reading
-                            <input type="checkbox" value="travelling" class="echk"> Travelling
-                            <input type="checkbox" value="sports" class="echk"> Sports
-                        </div>
-
-                        <div>
-                            <label><b>Company: </b></label>
-                            <select id="company">
-                                {% for c in companies %}
-                                <option value="{{ c.id }}">{{ c.c_name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                        <label id="lpassword"><b>Password: </b></label>
-                        <input type="password" placeholder="Enter Password" id="epassword" value=""><br>
+                <form action="" id="updateuser">{% csrf_token %}
+                    <div id="alertdiv" class="alert alert-info" style="display:none;">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <p></p>
                     </div>
+                    <div class="form-group row">  
+                        <label class="col-sm-2 col-form-label">Name: </label> 
+                            <div class="col-sm-8">  
+                                <input type="text" placeholder= "Enter Name" id="ename" value=""><br> 
+                            </div>  
+                    </div>
+                    <div class="form-group row">  
+                        <label class="col-sm-2 col-form-label">Username: </label> 
+                            <div class="col-sm-8">  
+                                <input type="text" placeholder= "Enter Username" id="eusername" value=""><br>
+                            </div>  
+                    </div>
+                    <div class="form-group row">  
+                        <label class="col-sm-2 col-form-label">Email: </label>
+                            <div class="col-sm-8">  
+                                <input type="email" placeholder="Enter Email" id="eemail" value="">
+                            </div>  
+                    </div>
+                    <div class="form-group row">  
+                        <label class="col-sm-2 col-form-label">Gender: </label>
+                            <div class="col-sm-8">  
+                                <input type="radio" value="male" class="egender"> Male   
+                                <input type="radio" value="female" class="egender"> Female  
+                                <input type="radio" value="other" class="egender"> Other
+                            </div>  
+                    </div>
+                    <div class="form-group row">  
+                        <label class="col-sm-2 col-form-label">Hobby: </label>
+                            <div class="col-sm-8">  
+                                <input type="checkbox" value="reading" class="echk"> Reading
+                                <input type="checkbox" value="travelling" class="echk"> Travelling
+                                <input type="checkbox" value="sports" class="echk"> Sports
+                            </div>  
+                    </div>
+                    <div class="form-group row">  
+                        <label class="col-sm-2 col-form-label">Company: </label>
+                            <div class="col-sm-8">  
+                                <select class="ecompany" id="ecompany"> 
+                                    {% for c in companies %}
+                                        <option value="{{ c.id }}">{{ c.c_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>  
+                    </div>
+                    <div class="form-group row">  
+                        <label id="lpassword" class="col-sm-2 col-form-label">Password: </label> 
+                            <div class="col-sm-8">  
+                                <input type="password" placeholder="Enter Password" id="epassword" value="">
+                            </div>  
+                    </div>  
                 </form>
             </div>
             <div class="modal-footer">
@@ -86,25 +100,25 @@
         </thead>
         <tbody>
             {% if users %}
-            {% with count=1  %}
-                {% for employee in users %}
-                    {% if not employee.is_admin %}
-                    <tr id="employee-{{employee.id}}">
-                        <td>{{ count }}</td>
-                        <td class="ename">{{ employee.name }}</td>
-                        <td class="eusername">{{ employee.username }}</td>
-                        <td class="eemail">{{ employee.email }}</td>
-                        <td class="egender">{{ employee.gender }}</td>
-                        <td class="ehobby">{{ employee.hobby }}</td>
-                        <td class="ecompany_id">{{ employee.company_id }}</td>
-                        <td>
-                            <button type="button" class="btn btn-success" id="editEmployee" data-id="{{employee.id}}">Edit</button>
-                            <button type="button" class="btn btn-danger" id="deleteEmployee" data-id="{{employee.id}}">Delete</button>
-                        </td>
-                    </tr>
-                    {% endif %}
-                {% endfor %}
-            {% endwith %}
+                {% with count=1  %}
+                    {% for employee in users %}
+                        {% if not employee.is_admin %}
+                            <tr>
+                                <td>{{ count }}</td>
+                                <td>{{ employee.name }}</td>
+                                <td>{{ employee.username }}</td>
+                                <td>{{ employee.email }}</td>
+                                <td>{{ employee.gender }}</td>
+                                <td>{{ employee.hobby_list }}</td>
+                                <td>{{ employee.company_id }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-success" id="editEmployee" data-id="{{employee.id}}">Edit</button>
+                                    <button type="button" class="btn btn-danger" id="deleteEmployee" data-id="{{employee.id}}">Delete</button>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% endwith %}
             {% else %}
                 No users
             {% endif %}
@@ -128,8 +142,7 @@
             $.each($("input[type='checkbox']:checked"), function(){
                 hobby.push($(this).val());
             });
-            console.log(hobby); 
-            company = $("#company").val();
+            company = $("#ecompany").val();
             password = $("#epassword").val();
 
             $.ajax({
@@ -188,27 +201,28 @@
         });
 
         $("#updateEmployee").click(function(){
-            name = $("#name").val();
-            username = $("#username").val();
-            email = $("#email").val();
-            gender = $("input[type='radio']:checked").val();
-            hobby = [];
+            e_name = $("#ename").val();
+            e_username = $("#eusername").val();
+            e_email = $("#eemail").val();
+            e_gender = $("input[type='radio']:checked").val();
+            e_hobby = [];
             $.each($("input[type='checkbox']:checked"), function(){
-                hobby.push($(this).val());
+                e_hobby.push($(this).val());
             });
-            company = $("#company").val();
+            e_company = $("#ecompany").val();
+            console.log(e_company);
 
             $.ajax({
                 url: "{% url 'editemployee' %}",
                 type: "POST",
                 data: {
                     'user_id': id,
-                    'name': name,
-                    'username': username,
-                    'email': email,
-                    'gender': gender,
-                    'hobby': hobby,
-                    'company': company,
+                    'name': e_name,
+                    'username': e_username,
+                    'email': e_email,
+                    'gender': e_gender,
+                    'hobby': e_hobby,
+                    'company': e_company,
                 },
                 success: function(data, status, xhr){
                     if(data.success == "True")
@@ -227,19 +241,24 @@
 
         $("body").on('click', '#deleteEmployee', function(){
             id = $(this).attr('data-id');
-            $.ajax({
-                url: "{% url 'deleteemployee' %}",
-                type: 'GET',
-                data: {
-                    'user_id' : id,
-                },
-                success: function(data, status, xhr){
-                    if(data.success == "True")
-                    {
-                        location.reload();
-                    }
-                },
-            });
+            var isconfirm = confirm('Are you sure you want to delete employee?');
+            console.log(isconfirm);
+            if(isconfirm)
+            {
+                $.ajax({
+                    url: "{% url 'deleteemployee' %}",
+                    type: 'GET',
+                    data: {
+                        'user_id' : id,
+                    },
+                    success: function(data, status, xhr){
+                        if(data.success == "True")
+                        {
+                            location.reload();
+                        }
+                    },
+                });
+            }
         });
     }); 
 </script>

@@ -13,27 +13,41 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="">{% csrf_token %}
-                    <div>  
-                        <div id="alertdiv" class="alert alert-info" style="display:none;">
-                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                            <p></p>
-                        </div> 
-                        <label><b>Name: </b></label>   
-                        <input type="text" id="cname" placeholder="Enter company name" value=""><br>
-                        
-                        <label><b>Email: </b></label> 
-                        <input type="text" id="cemail" placeholder="Enter email" value=""><br>
-                        
-                        <label><b>Mobile no: </b></label> 
-                        <input type="number" id="cmobile" placeholder="Enter mobile number" alue=""><br>
-
-                        <label><b>Address: </b></label>
-                        <input type="text" id="caddress" placeholder="Enter address" value=""><br>
-    
-                        <label><b>Website: </b></label> 
-                        <input type="text" id="cwebsite" placeholder="Enter website link" value="">
+                <form action="" id="updateuser">{% csrf_token %}
+                    <div id="alertdiv" class="alert alert-info" style="display:none;">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <p></p>
                     </div>
+                    <div class="form-group row">  
+                        <label class="col-sm-2 col-form-label">Name: </label> 
+                            <div class="col-sm-8">  
+                                <input type="text" id="cname" placeholder="Enter company name" value="" required>
+                            </div>  
+                    </div>
+                    <div class="form-group row">  
+                        <label class="col-sm-2 col-form-label">Email: </label> 
+                            <div class="col-sm-8">  
+                                <input type="email" id="cemail" placeholder="Enter email" value="" required>
+                            </div>  
+                    </div>
+                    <div class="form-group row">  
+                        <label class="col-sm-2 col-form-label">Mobile: </label>
+                            <div class="col-sm-8">  
+                                <input type="number" id="cmobile" placeholder="Enter mobile number" value="" required>
+                            </div>  
+                    </div>
+                    <div class="form-group row">  
+                        <label id="lpassword" class="col-sm-2 col-form-label">Address: </label> 
+                            <div class="col-sm-8">  
+                                <input type="text" id="caddress" placeholder="Enter address" value="" required>
+                            </div>  
+                    </div>
+                    <div class="form-group row">  
+                        <label id="lpassword" class="col-sm-2 col-form-label">Website: </label> 
+                            <div class="col-sm-8">  
+                                <input type="text" id="cwebsite" placeholder="Enter website link" value="" required>
+                            </div>  
+                    </div>  
                 </form>
             </div>
             <div class="modal-footer">
@@ -62,11 +76,11 @@
             {% for company in companies %}
             <tr>
                 <td>{{ forloop.counter }}</td>
-                <td class="cname">{{ company.c_name }}</td>
-                <td class="cemail">{{ company.email }}</td>
-                <td class="cmobile">{{ company.mobile }}</td>
-                <td class="caddress">{{ company.address }}</td>
-                <td class="cwebsite">{{ company.website }}</td>
+                <td>{{ company.c_name }}</td>
+                <td>{{ company.email }}</td>
+                <td>{{ company.mobile }}</td>
+                <td>{{ company.address }}</td>
+                <td>{{ company.website }}</td>
                 <td>
                     <button type="button" class="btn btn-success" id="editCompany" data-id="{{company.id}}">Edit</button>
                     <button type="button" class="btn btn-danger" id="deleteCompany" data-id="{{company.id}}">Delete</button>
@@ -176,19 +190,24 @@
 
         $("body").on('click', '#deleteCompany', function(){
             id = $(this).attr('data-id');
-            $.ajax({
-                url: "{% url 'deletecompany' %}",
-                type: 'GET',
-                data: {
-                    'company_id' : id,
-                },
-                success: function(data, status, xhr){
-                    if(data.success == "True")
-                    {
-                        location.reload();
-                    }
-                },
-            });
+            var isconfirm = confirm('Are you sure you want to delete company?');
+            console.log(isconfirm);
+            if(isconfirm)
+            {
+                $.ajax({
+                    url: "{% url 'deletecompany' %}",
+                    type: 'GET',
+                    data: {
+                        'company_id' : id,
+                    },
+                    success: function(data, status, xhr){
+                        if(data.success == "True")
+                        {
+                            location.reload();
+                        }
+                    },
+                });  
+            }
         });
     });
 </script>

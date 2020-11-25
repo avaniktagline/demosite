@@ -17,37 +17,47 @@
               </button>
             </div>
             <div class="modal-body">
-                <form action="" id="editProfile">{% csrf_token %}
-                    <div> 
-                        <div id="alertdiv" class="alert alert-info" style="display:none;">
-                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                            <p></p>
-                        </div> 
-                        {% if request.session.user_data %}
-                        <label><b>Name: </b></label>   
-                        <input type="text" id="name" name="name" value="{{ user.name }}"><br>
-                        
-                        <label><b>Username: </b></label>
-                        <input type="text" id="username" name="username" value="{{ user.username }}"><br>
-    
-                        <label><b>Email: </b></label> 
-                        <input type="text" id="email" name="email" value="{{ user.email }}">  
-    
-                        <div>  
-                            <label><b>Gender: </b></label>  
-                            <input type="radio" value="male" id="gender" name="gender" {% if user.gender == "male" %} checked {% endif %}> Male   
-                            <input type="radio" value="female" id="gender" name="gender" {% if user.gender == "female" %} checked {% endif %}> Female  
-                            <input type="radio" value="other" id="gender" name="gender" {% if user.gender == "other" %} checked {% endif %}> Other  
-                        </div> 
-    
-                        <div>
-                            <label><b>Hobby: </b></label>
-                            <input type="checkbox" value="reading" id="hobby" name="chk" {% if "reading" in user.hobby %} checked {% endif %}> Reading
-                            <input type="checkbox" value="travelling" id="hobby" name="chk" {% if "travelling" in user.hobby  %} checked {% endif %}> Travelling
-                            <input type="checkbox" value="sports" id="hobby" name="chk" {% if "sports" in user.hobby %} checked {% endif %}> Sports
-                        </div>
-                        {% endif %}
+                <form action="" id="editprofile">{% csrf_token %}
+                    <div id="alertdiv" class="alert alert-info" style="display:none;">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <p></p>
                     </div>
+                    {% if request.session.user_data %}
+                    <div class="form-group row">  
+                        <label class="col-sm-2 col-form-label">Name: </label> 
+                            <div class="col-sm-8">  
+                                <input type="text" id="name" name="name" value="{{ user.name }}">
+                            </div>  
+                    </div>
+                    <div class="form-group row">  
+                        <label class="col-sm-2 col-form-label">Username: </label> 
+                            <div class="col-sm-8">  
+                                <input type="text" id="username" name="username" value="{{ user.username }}">
+                            </div>  
+                    </div>
+                    <div class="form-group row">  
+                        <label class="col-sm-2 col-form-label">Email: </label>
+                            <div class="col-sm-8">  
+                                <input type="text" id="email" name="email" value="{{ user.email }}">
+                            </div>  
+                    </div>
+                    <div class="form-group row">  
+                        <label id="lpassword" class="col-sm-2 col-form-label">Gender: </label> 
+                            <div class="col-sm-8">  
+                                <input type="radio" value="male" id="gender" name="gender" {% if user.gender == "male" %} checked {% endif %}> Male   
+                                <input type="radio" value="female" id="gender" name="gender" {% if user.gender == "female" %} checked {% endif %}> Female  
+                                <input type="radio" value="other" id="gender" name="gender" {% if user.gender == "other" %} checked {% endif %}> Other
+                            </div>  
+                    </div>
+                    <div class="form-group row">  
+                        <label id="lpassword" class="col-sm-2 col-form-label">Hobby: </label> 
+                            <div class="col-sm-8">  
+                                <input type="checkbox" value="reading" id="hobby" name="chk" {% if "reading" in user.hobby %} checked {% endif %}> Reading
+                                <input type="checkbox" value="travelling" id="hobby" name="chk" {% if "travelling" in user.hobby  %} checked {% endif %}> Travelling
+                                <input type="checkbox" value="sports" id="hobby" name="chk" {% if "sports" in user.hobby %} checked {% endif %}> Sports
+                            </div>  
+                    </div> 
+                    {% endif %} 
                 </form>
             </div>
             <div class="modal-footer">

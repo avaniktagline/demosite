@@ -109,7 +109,7 @@ class EditUser(generic.TemplateView):
             user.save()
             message = "User details successfully updated"
             return JsonResponse({'success': 'True', 'msg':message})
-        except Exception as e:
+        except ValidationError as e:
             return JsonResponse({'success': 'False', 'msg':str(e)})
 
 
@@ -129,10 +129,16 @@ class ListCompany(generic.TemplateView):
         cemail = self.request.POST.get('cemail')
         cwebsite = self.request.POST.get('cwebsite')
         try:
-            Company.objects.create(c_name = cname, address = caddress, mobile = cmobile, email = cemail, website = cwebsite)
+            c = Company()
+            c.c_name = cname
+            c.address = caddress
+            c.mobile = cmobile
+            c.email = cemail
+            c.website = cwebsite
+            c.save()
             message = "Company added successfully"
             return JsonResponse({'success': 'True', 'msg':message})
-        except Exception as e:
+        except ValidationError as e:
             return JsonResponse({'success': 'False', 'msg':str(e)})
 
 
@@ -144,7 +150,6 @@ class EditCompany(generic.TemplateView):
         company_id = self.request.GET.get('company_id')
         cdata = Company.objects.filter(id=company_id)
         company_list = serializers.serialize('json', cdata)
-        # print("==========json data==", json.loads(company_list)[0]['fields'])
         return JsonResponse(json.loads(company_list)[0]['fields'])
 
     def post(self, request, *args, **kwargs):
@@ -154,7 +159,6 @@ class EditCompany(generic.TemplateView):
         mobile = request.POST.get('mobile')
         address = request.POST.get('address')
         website = request.POST.get('website')        
-        # print(request.POST)
         try:
             company = Company.objects.get(id=company_id)
             company.c_name = cname
@@ -165,7 +169,7 @@ class EditCompany(generic.TemplateView):
             company.save()
             message = "Company details successfully updated"
             return JsonResponse({'success': 'True', 'msg':message})
-        except Exception as e:
+        except ValidationError as e:
             return JsonResponse({'success': 'False', 'msg':str(e)})
 
 
@@ -198,12 +202,18 @@ class ListEmployee(generic.TemplateView):
         company = self.request.POST.get('company')
         password = self.request.POST.get('password')
         try:
-            u = User.objects.create(name = name, username = username, email = email, gender = gender, hobby = hobby, company_id = company,)
+            u = User()
             u.password = make_password(password = password)
+            u.name = name
+            u.username = username
+            u.email = email
+            u.gender = gender
+            u.hobby = hobby
+            u.company_id = company
             u.save()
             message = "Employee added successfully"
             return JsonResponse({'success': 'True', 'msg':message})
-        except Exception as e:
+        except ValidationError as e:
             return JsonResponse({'success': 'False', 'msg':str(e)})
 
 
@@ -215,6 +225,7 @@ class EditEmployee(generic.TemplateView):
         user_id = self.request.GET.get('user_id')
         udata = User.objects.filter(id=user_id)
         user_list = serializers.serialize('json', udata)
+        print(user_list)
         # print("==========json data==", json.loads(user_list)[0]['fields'])
         return JsonResponse(json.loads(user_list)[0]['fields'])
 
@@ -225,7 +236,7 @@ class EditEmployee(generic.TemplateView):
         email = request.POST.get('email')
         gender = request.POST.get('gender')
         hobby = request.POST.getlist('hobby[]')
-        company = request.POST.get('website')        
+        company = request.POST.get('company')   
         print(request.POST)
         try:
             employee = User.objects.get(id=user_id)
@@ -234,11 +245,12 @@ class EditEmployee(generic.TemplateView):
             employee.email = email
             employee.gender = gender
             employee.hobby = hobby
-            employee.company = company
+            employee.company_id = company
+            print(employee.company_id)
             employee.save()
             message = "Employee details successfully updated"
             return JsonResponse({'success': 'True', 'msg':message})
-        except Exception as e:
+        except ValidationError as e:
             return JsonResponse({'success': 'False', 'msg':str(e)})
 
 
